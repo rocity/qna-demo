@@ -1,15 +1,22 @@
-<style>
-  div.question {
-    border: 1px solid red;
-    padding: 8px 12px;
-  }
-</style>
+{% extends 'base.html' %}
 
-<div>
-  <div class="question">
-    {% for question in questions %}
-      <h2>{{ question.title }}</h2>
-      <p>{{ question.user }}</p>
-    {% endfor %}
+{% block content %}
+  <div>
+    <div class="question">
+      <table class="u-full-width">
+        {% for question in questions %}
+          <tr>
+            <td>
+              <h5>0</h5>
+              <span>Answers</span>
+            </td>
+            <td>
+              <h4>{{ question.title }}</h4>
+              <span>{{ question.user }}</span>
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
   </div>
-</div>
+{% endblock content %}
