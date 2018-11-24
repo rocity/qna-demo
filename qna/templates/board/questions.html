@@ -1,0 +1,15 @@
+<style>
+  div.question {
+    border: 1px solid red;
+    padding: 8px 12px;
+  }
+</style>
+
+<div>
+  <div class="question">
+    {% for question in questions %}
+      <h2>{{ question.title }}</h2>
+      <p>{{ question.user }}</p>
+    {% endfor %}
+  </div>
+</div>
