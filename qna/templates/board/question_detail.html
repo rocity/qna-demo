@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <style>
+    .question .body {
+      padding: 8px 12px;
+      border-radius: 8px;
+      background-color: #dddddd;
+    }
+
+    .answer {
+      padding: 8px 12px;
+      border-radius: 8px;
+      background-color: lavender;
+    }
+
+    .baest {
+      width: 50px;
+      height: auto;
+    }
+  </style>
+
+  <div class="question">
+    <h2>{{ question.title }}</h2>
+    <small>asked by: {{ question.user }}</small>
+    <div class="body">
+      {{ question.body }}
+
+    </div>
+    <p>Asked at {{ question.created_at|date:"b j, Y" }}</p>
+  </div>
+
+  <hr>
+
+  <div class="container answers">
+    <h3>Answers</h3>
+    <hr>
+
+    {% for answer in question.answer_set.all %}
+      <div class="row">
+        <div class="two columns">
+          <!-- Is Best -->
+          {% if answer.best %}
+            <img class="baest" src="{% static 'img/best.jpg' %}" alt="best">
+          {% endif %}
+        </div>
+        <div class="ten columns">
+          <div class="answer">
+            {{ answer.body }}
+          </div>
+
+          <p>Answered by: {{ answer.user }}</p>
+          <span class="lm">Last Modified: {{ answer.updated_at|date:"b j, Y" }}</span>
+          <hr>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock content %}

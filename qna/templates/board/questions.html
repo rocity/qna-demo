@@ -11,7 +11,7 @@
               <span>Answers</span>
             </td>
             <td>
-              <h4>{{ question.title }}</h4>
+              <h4><a href="{% url 'question' question.id %}">{{ question.title }}</a></h4>
               <span>{{ question.user }}</span>
             </td>
           </tr>

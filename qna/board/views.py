@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DetailView
 
 from board.models import Question
 
@@ -16,3 +16,10 @@ class QuestionsTemplateView(TemplateView):
 
         data['questions'] = Question.objects.all()
         return data
+
+
+class QuestionDetailView(DetailView):
+    """
+    Question details
+    """
+    model = Question
