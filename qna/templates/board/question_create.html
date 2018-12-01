@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+
+  {% if success %}
+    <div class="success" style="background: greenyellow;padding:12px;">
+      <p>Your question has been submitted</p>
+    </div>
+  {% endif %}
+
+
+  {% if errors %}
+  <ul>
+    <li>You got errors!</li>
+    <li>
+      <ul>
+        {% for error in errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    </li>
+  </ul>
+  {% endif %}
+
+
+
+  <div class="row">
+    <div class="column">
+      <h2>Ask a Question</h2>
+      <form action="" method="POST" novalidate>
+        {% csrf_token %}
+        <table>
+          {{ form.as_table }}
+        </table>
+
+        <button class="button-primary">Submit</button>
+      </form>
+
+    </div>
+  </div>
+{% endblock content %}
