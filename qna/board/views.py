@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, DetailView
 
 from board.models import Question
-from board.forms import QuestionForm
+from board.forms import QuestionModelForm
+from accounts.models import User
 
 
 class QuestionsTemplateView(TemplateView):
@@ -16,7 +17,7 @@ class QuestionsTemplateView(TemplateView):
         data = super(QuestionsTemplateView, self).get_context_data(*args, **kwargs)
 
         data['questions'] = Question.objects.all()
-        data['form'] = QuestionForm()
+        data['form'] = QuestionModelForm()
         return data
 
 
@@ -39,7 +40,7 @@ class QuestionCreateView(TemplateView):
         context = self.get_context_data()
 
         context.update({
-            'form': QuestionForm(),
+            'form': QuestionModelForm(),
         })
 
         return render(request, self.template_name, context)
@@ -47,24 +48,18 @@ class QuestionCreateView(TemplateView):
     def post(self, request, *args, **kwargs):
         context = self.get_context_data()
 
-        context.update({
-            'form': QuestionForm(),
+        post_data = request.POST.copy()
+        post_data.update({
+            'user': request.user.id
         })
 
-        post_data = request.POST.copy()
-        data = {
-            'user': request.user,
-            'title': post_data.get('title'),
-            'body': post_data.get('body')
-        }
-
-        form = QuestionForm(data)
+        form = QuestionModelForm(post_data)
 
         if form.is_valid():
-            question = Question.objects.create(**form.data)
+            form.save()
             context.update({
                 'success': True,
-                'question': question
+                'form': QuestionModelForm()
             })
             return render(request, self.template_name, context)
 
@@ -74,4 +69,3 @@ class QuestionCreateView(TemplateView):
         })
 
         return render(request, self.template_name, context)
-
