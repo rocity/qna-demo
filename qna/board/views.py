@@ -70,7 +70,7 @@ class QuestionCreateView(TemplateView):
 
         # Fall here by default if not valid
         context.update({
-            'errors': form.errors
+            'form': form
         })
 
         return render(request, self.template_name, context)

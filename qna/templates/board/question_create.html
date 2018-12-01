@@ -14,8 +14,8 @@
 
   {% if errors %}
   <ul>
-    <li>You got errors!</li>
     <li>
+      You got errors!
       <ul>
         {% for error in errors %}
           <li>{{ error }}</li>
@@ -25,6 +25,13 @@
   </ul>
   {% endif %}
 
+  <div class="error" style="color: pink">
+    <ul>
+      {% for error in form.duplicate.errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+  </div>
 
 
   <div class="row">
@@ -33,7 +40,28 @@
       <form action="" method="POST" novalidate>
         {% csrf_token %}
         <table>
-          {{ form.as_table }}
+          <tr>
+            <td><label for="form.title.id_for_label">Title</label></td>
+            <td>
+              {{ form.title }}
+              <small style="color: red;">
+                {% for error in form.title.errors %}
+                  {{ error }}
+                {% endfor %}
+              </small>
+            </td>
+          </tr>
+          <tr>
+            <td><label for="form.body.id_for_label">Body</label></td>
+            <td>
+              {{ form.body }}
+              <small style="color: red;">
+                {% for error in form.body.errors %}
+                {{ error }}
+                {% endfor %}
+              </small>
+            </td>
+          </tr>
         </table>
 
         <button class="button-primary">Submit</button>
